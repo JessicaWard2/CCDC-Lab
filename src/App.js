@@ -29,7 +29,7 @@ export default function App() {
 
   const fetchStatus = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/status');
+      const response = await fetch('/api/status');
       const data = await response.json();
       console.log('Fetched service data:', data);
       setServicesData(data);

@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
+import { useTimer } from "../Time/TimerContext.js";
 import { useLocation} from "react-router-dom";
 import "./Injects.css";
-
-const API = "http://localhost:3001";
 
 const formatTime = (seconds) =>{
     const hours = Math.floor(seconds / 3600);
@@ -28,77 +27,75 @@ const competitionInjects = importAll( //Pulls injects for comp. mode
 );
 
 export default function Injects() {
+    const {secondsLeft, isRunning } = useTimer();
     const location = useLocation();
     const currentMode = location.state?.currentMode || 1; //Determines difficulty mode with 1 as tut. 2 as comp.
     const activeInjects = currentMode === 1 ? tutorialInjects : competitionInjects; //Selects what folder it pulls injects from.
     const difficultyTimeSettings = {
         1: { injectAddTime: 600, deadline: 1800}, //Tutorial Mode
-        2: { injectAddTime: 5, deadline: 15} // Competition Mode
+        2: { injectAddTime: 5, deadline: 15}
     };
     const currentTimeSettings = difficultyTimeSettings[currentMode]; //Pulls timing settings for adding injects and deadlines
     const [displayedInjects, setInjects] = useState([]); //Holds injects added to the page
     const [submittedInjects, setSubmittedInjects] = useState({}); //Checks whether inject has been completed
     const [injectDeadline, setInjectDeadline] = useState({});
-    const [secondsLeft, setSecondsLeft] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
 
-    useEffect(() => { //Loads page data from server on mount, then polls every 3 seconds for updates
-        function loadState() {
-            fetch(`${API}/api/injects/state`)
-                .then(res => res.json())
-                .then(data => {
-                    setInjects(data.savedInjectsIds);
-                    setSubmittedInjects(data.savedSubmitted);
-                    setInjectDeadline(data.injectDeadline);
-                })
-                .catch(err => console.error("Failed to load inject state:", err));
-            fetch(`${API}/api/timer/state`)
-                .then(res => res.json())
-                .then(data => {
-                    setIsRunning(data.running);
-                    if (data.running && data.endTime) {
-                        const remaining = Math.max(Math.ceil((data.endTime - Date.now()) / 1000), 0);
-                        setSecondsLeft(remaining);
-                    } else {
-                        setSecondsLeft(data.remainingOnPause ?? 600);
-                    }
-                })
-                .catch(err => console.error("Failed to load timer state:", err));
-        }
-        loadState();
-        const poll = setInterval(loadState, 1000);
-        return () => clearInterval(poll);
+    useEffect(() => { //Loads page data.
+        const savedInjects = JSON.parse(localStorage.getItem("savedInjectsIds"));
+        const saveSubmitted = JSON.parse(localStorage.getItem("savedSubmitted"));
+        const savedDeadline = JSON.parse(localStorage.getItem("injectDeadline"));
+        if (savedInjects) setInjects(savedInjects);
+        if (saveSubmitted) setSubmittedInjects(saveSubmitted);
+        if (savedDeadline) setInjectDeadline(savedDeadline);
     }, []);
 
-    useEffect(() => {
-        if (!isRunning || secondsLeft <= 0) return;
-        if (secondsLeft % currentTimeSettings.injectAddTime !== 0) return;
-        const current = displayedInjects;
-        if (current.length >= activeInjects.length) return;
+    useEffect(() => { //Uses reset button to clear injects
+        const saved = JSON.parse(localStorage.getItem("labTimer"));
+        if (!isRunning && saved?.endTime === 0 && secondsLeft === 600){
+            setInjects([]);
+            setSubmittedInjects({});
+            setInjectDeadline({});
+            localStorage.clear();
+            window.location.reload();
+        }
+    },[secondsLeft, isRunning]);
 
-        const nextInject = activeInjects[current.length];
-        const deadline = secondsLeft - currentTimeSettings.deadline;
-        fetch(`${API}/api/injects/add`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ inject: nextInject, deadline })
-        }).catch(err => console.error("Failed to add inject:", err));
+    function addInjects() { //Call this to add more injects
+        if (displayedInjects.length < activeInjects.length) {
+            const nextInject = activeInjects[displayedInjects.length];
+            const injectList = [...displayedInjects, nextInject];
+            setInjects(injectList);
+            localStorage.setItem("savedInjectsIds", JSON.stringify(injectList));
+            const newDeadline = {
+                ...injectDeadline,
+                [nextInject.id]: secondsLeft - currentTimeSettings.deadline
+            };
+            setInjectDeadline(newDeadline);
+            localStorage.setItem("injectDeadline", JSON.stringify(newDeadline));
+        }
+    }
+
+    useEffect(() => { //This function controls the timing of when injects are deployed
+        if (isRunning && secondsLeft > 0 && secondsLeft % currentTimeSettings.injectAddTime === 0) { //Current set to deploy every 10 seconds for testing.
+            addInjects();
+        }
     }, [secondsLeft, isRunning]);
 
     function handleCheckbox(injectId, checked) { //This is how users check off a task
-        const expired = secondsLeft <= injectDeadline[injectId];
+        const expired = secondsLeft <=  injectDeadline[injectId];
         if (expired) return;
-        fetch(`${API}/api/injects/submit`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ injectId, checked })
-        }).catch(err => console.error("Failed to submit inject:", err));
+            const newSubmission = {
+                ...submittedInjects,
+                [injectId]: checked
+            };
+            setSubmittedInjects(newSubmission);
+            localStorage.setItem("savedSubmitted", JSON.stringify(newSubmission));
     }
 
     return (
         <div className = "injectsContainer">
             <img
-                src="Header.png" alt="IUS CCDC Banner" className="center">
+            src="Header.png" alt="IUS CCDC Banner" className="center">
             </img>
             <h1 className= "topHeader">Inject List
             </h1>
