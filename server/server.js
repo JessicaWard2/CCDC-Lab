@@ -51,8 +51,8 @@ const services = [
 
 const services = [
  { name: "ad-dns", host: "192.168.40.9", port:53},
- { name: "mail-smtp", host: "192.168.20.10", port:22},
- { name: "mail-pop3", host: "192.168.20.10", port:22},
+ { name: "mail-smtp", host: "192.168.20.10", port:80},
+ { name: "mail-pop3", host: "192.168.20.10", port:80},
   { name: "2022-ftp", host: "192.168.40.11", port:21},
   { name: "splunk-http", host: "192.168.20.11", port:80},
   { name: "2019-http", host: "192.168.40.10", port:80},
