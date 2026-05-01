@@ -25,10 +25,17 @@ Now that you understand these things, you are ready to enter the competition.
             
 
 Good luck!
-    
 
 
 *You can get passwords from Professor Doyle, Jonah Facer, Andrew Nale, John Aaron, or Jessica Ward.
 
-
+## Customization
+The inject page has been designed to be updated as easy as possible. Both modes can be updated in these easy steps.
+1. Find in the source code folders in the /src file either the 'CompetitionMode' or 'TutorialMode' folders.
+2. Both of these folders contain pdfs with the naming convention "inject0x" and they are all pdfs and they must stay pdfs.
+3. Simply swap or add new inject pdfs with the same naming convention into either of these folders.
+4. You may also want to adjust the timer for these new injects and this can be done by navigating to the "Inject.js" in the "Pages" folder.
+5. Under the Injects function you will find the following:
+"1: { injectAddTime: 000, deadline: 000}, //Tutorial Mode" and "2: { injectAddTime: 000, deadline: 000} //Competition Mode"
+6. The comments explain which mode each of these are. This function takes them as seconds, the program will eventually convert them to minutes and hours. Just add them in as seconds.
 

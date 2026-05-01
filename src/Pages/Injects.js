@@ -33,7 +33,7 @@ export default function Injects() {
     const activeInjects = currentMode === 1 ? tutorialInjects : competitionInjects; //Selects what folder it pulls injects from.
     const difficultyTimeSettings = {
         1: { injectAddTime: 600, deadline: 1800}, //Tutorial Mode
-        2: { injectAddTime: 5, deadline: 15}
+        2: { injectAddTime: 5, deadline: 15} //Competition Mode
     };
     const currentTimeSettings = difficultyTimeSettings[currentMode]; //Pulls timing settings for adding injects and deadlines
     const [displayedInjects, setInjects] = useState([]); //Holds injects added to the page

@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5ce2bade-83be-4a40-84f2-3859a85bb677" name="Changes" comment="featuring server : )">
+    <list default="true" id="5ce2bade-83be-4a40-84f2-3859a85bb677" name="Changes" comment="Configured server.js so that the timer, inject page and score from scoreboard are synced across all users.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Docs/How To Docs/ImplementationDocs/UsersManual.md" beforeDir="false" afterPath="$PROJECT_DIR$/Docs/How To Docs/ImplementationDocs/UsersManual.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Pages/Injects.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Injects.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Pages/Scoreboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Pages/Scoreboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Time/TimerContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Time/TimerContext.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +200,12 @@
       <workItem from="1770418413248" duration="6945000" />
       <workItem from="1770764814685" duration="831000" />
       <workItem from="1770948722129" duration="5832000" />
-      <workItem from="1771021697230" duration="8970000" />
+      <workItem from="1771021697230" duration="9145000" />
+      <workItem from="1773439584212" duration="707000" />
+      <workItem from="1773440626414" duration="122000" />
+      <workItem from="1773858187123" duration="1353000" />
+      <workItem from="1776898810552" duration="113000" />
+      <workItem from="1777639730092" duration="2166000" />
     </task>
     <task id="LOCAL-00001" summary="Added .gitignore">
       <option name="closed" value="true" />
@@ -308,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1770427682715</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Configured server.js so that the timer, inject page and score from scoreboard are synced across all users.">
+      <option name="closed" value="true" />
+      <created>1771210321833</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1771210321833</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -337,7 +348,8 @@
     <MESSAGE value="fixes" />
     <MESSAGE value="real fix" />
     <MESSAGE value="featuring server : )" />
-    <option name="LAST_COMMIT_MESSAGE" value="featuring server : )" />
+    <MESSAGE value="Configured server.js so that the timer, inject page and score from scoreboard are synced across all users." />
+    <option name="LAST_COMMIT_MESSAGE" value="Configured server.js so that the timer, inject page and score from scoreboard are synced across all users." />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/CCDC_Lab$CCDC_Lab.coverage" NAME="CCDC-Lab Coverage Results" MODIFIED="1763509058427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
