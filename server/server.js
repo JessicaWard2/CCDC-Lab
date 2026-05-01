@@ -10,6 +10,7 @@ const port = 3001;
 
 //Add back once get all of them
 /*const services = [
+169.254.172.24
   { name: "ecom-http", host: "192.168.1.10", port: 80 },
   { name: "mail-pop3", host: "192.168.1.11", port: 25 },
   { name: "2022-ftp", host: "192.168.1.12", port: 21 },
@@ -17,6 +18,7 @@ const port = 3001;
   { name: "splunk-http", host: "192.168.1.14", port: 3306 },
   { name: "2019-http", host: "192.168.1.15", port: 22 },
   { name: "mail-smtp", host: "192.168.1.11", port: 143 },
+   192.168.40.9
 ];*/
 
 
@@ -32,7 +34,7 @@ let currentStatus = {};
 
 
 const services = [
- { name: "ad-dns", host: "169.254.172.24", port:53},
+ { name: "ad-dns", host: "8.8.8.8", port:80},
  { name: "mail-smtp", host: "169.254.172.24", port: 139 },
  { name: "mail-pop3", host: "169.254.172.24", port: 139 },
   { name: "2022-ftp", host: "169.254.172.24", port: 139 },
